@@ -1,6 +1,11 @@
 package com.tw.conference;
 
-import java.util.Map;
+import com.tw.conference.config.BasicSetting;
+import com.tw.conference.entity.Conference;
+import com.tw.conference.entity.Track;
+import com.tw.conference.service.impl.ConferenceServiceImpl;
+
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -12,27 +17,38 @@ import java.util.Scanner;
 public class ConferenceMain {
 
     public static void main(String[] args) {
-        //获取会议信息
-        System.out.print("当前会议信息");
-        Conference conference=new Conference();
-        Map<String,Integer> conferenceMap= conference.getConferences();
-        conferenceMap.forEach((k,v)->{
-            System.out.println("会议题目："+k+"，会议时间："+v);
-        });
-        System.out.println("=====================================");
-
         //参数信息
-        System.out.print("当前参数信息");
-        BasicSetting  parameter =new BasicSetting();
-        parameter.printInfo();
+        BasicSetting parameter =new BasicSetting();
+        System.out.print("是否修改参数(Y/N)：");
         Scanner sc = new Scanner(System.in);
-        System.out.println("是否修改参数(Y/N)：");
         String str=sc.nextLine();
         if("Y".equals(str)){
             parameter.setting();
         }
+        System.out.println("当前参数信息");
+        parameter.printInfo();
+        System.out.println("=====================================");
+
+        //获取会议信息
+        System.out.println("当前会议信息");
+        ConferenceServiceImpl conferenceService =new ConferenceServiceImpl();
+        List<Conference> conferences =conferenceService.initializeConference();
+        for(Conference conference:conferences){
+            if(conference.getDuration()==0){
+                conference.setDuration(parameter.getLightning());
+            }
+            System.out.println("会议名称："+conference.getConferenceName()+" ,会议时长："+ conference.getDuration());
+        }
+        System.out.println("=====================================");
 
         //构建会议安排
-
+       List<Track> tracks= conferenceService.scheduleConference(conferences,parameter);
+       for(Track track:tracks){
+            System.out.println(track.getTrackName());
+            track.getTrackDetails().forEach(detail->{
+                System.out.println(detail.getTime()+" "+detail.getConference().getConferenceName()+" "+detail.getConference().getDuration()+"min");
+                System.out.println("  ");
+            });
+       }
     }
 }

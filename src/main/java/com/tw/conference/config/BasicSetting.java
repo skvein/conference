@@ -1,4 +1,4 @@
-package com.tw.conference;
+package com.tw.conference.config;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -15,9 +15,9 @@ public class BasicSetting {
     private final static int MORNING_MAX=12;
     private final static int AFTERNOON_MAX=5;
 
-    private int conferenceDay=2;
+    private int conferenceDay;
 
-    private int time=5;
+    private int lightning=5;
 
     private int morningStartHours=9;
 
@@ -35,12 +35,12 @@ public class BasicSetting {
         this.conferenceDay = conferenceDay;
     }
 
-    public int getTime() {
-        return time;
+    public int getLightning() {
+        return lightning;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setLightning(int lightning) {
+        this.lightning = lightning;
     }
 
     public int getMorningStartHours() {
@@ -85,7 +85,7 @@ public class BasicSetting {
         conferenceDay=settingInt(sc,"会议天数需是正整数");
 
         System.out.println("请输入时间单位：");
-        time = settingInt(sc,"时间单位是正整数");
+        lightning = settingInt(sc,"时间单位是正整数");
 
         System.out.println("早上开始时间：");
         morningStartHours = settingMorningStartHours(sc);
@@ -205,7 +205,7 @@ public class BasicSetting {
 
     public void printInfo(){
         System.out.println("会议安排天数："+conferenceDay);
-        System.out.println("会议时间单位："+time);
+        System.out.println("最小会议时间："+lightning);
         System.out.println("早上开始时间："+morningStartHours);
         System.out.println("早上结束时间："+morningEndHours);
         System.out.println("下午开始时间："+afternoonStartHours);
