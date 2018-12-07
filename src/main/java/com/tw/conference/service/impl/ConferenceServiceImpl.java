@@ -3,7 +3,7 @@ package com.tw.conference.service.impl;
 import com.tw.conference.config.BasicSetting;
 import com.tw.conference.entity.Conference;
 import com.tw.conference.entity.Track;
-import com.tw.conference.entity.TrackDetails;
+import com.tw.conference.entity.TrackDetail;
 import com.tw.conference.service.ConferenceService;
 
 import java.io.BufferedReader;
@@ -109,11 +109,11 @@ public class ConferenceServiceImpl implements ConferenceService {
      */
     private Track buildTrack(List<Conference> conferences,int morningMinute,int afernoonMinute,BasicSetting parameter){
         Track track=new Track();
-        List<TrackDetails> trackDetails=new ArrayList<>();
+        List<TrackDetail> trackDetails=new ArrayList<>();
         //上午会议
         buildTrack(trackDetails,conferences,morningMinute,parameter.getMorningStartHours(),AM);
         //中午lunch
-        TrackDetails lunchdetail=new TrackDetails();
+        TrackDetail lunchdetail=new TrackDetail();
         lunchdetail.setTime(String.valueOf(parameter.getMorningEndHours())+AM);
         Conference lunch=new Conference();
         lunch.setConferenceName(LUNCH);
@@ -122,7 +122,7 @@ public class ConferenceServiceImpl implements ConferenceService {
         //下午
         buildTrack(trackDetails,conferences,afernoonMinute,parameter.getAfternoonStartHours(),PM);
         //Networking Event
-        TrackDetails netWrokdetail=new TrackDetails();
+        TrackDetail netWrokdetail=new TrackDetail();
         netWrokdetail.setTime(String.valueOf(parameter.getAfternoonEndHours())+PM);
         Conference networking=new Conference();
         networking.setConferenceName(NETWORK);
@@ -139,13 +139,13 @@ public class ConferenceServiceImpl implements ConferenceService {
      * @param startHour
      * @return
      */
-    private List<TrackDetails> buildTrack(List<TrackDetails> trackDetails,List<Conference> conferences,int leisureMinute,int startHour,String str){
+    private List<TrackDetail> buildTrack(List<TrackDetail> trackDetails, List<Conference> conferences, int leisureMinute, int startHour, String str){
         Calendar morningCalendar =Calendar.getInstance();
         morningCalendar.set(0,0,0,startHour,0);
         List<Conference> datas=getConference(conferences,new ArrayList<>(),leisureMinute,0).get(0);
         conferences.remove(datas);
         for(Conference conference:datas){
-            TrackDetails details=new TrackDetails();
+            TrackDetail details=new TrackDetail();
             details.setTime(String.valueOf(morningCalendar.get(Calendar.HOUR))+":"+String.valueOf(morningCalendar.get(Calendar.MINUTE))+str);
             details.setConference(conference);
             trackDetails.add(details);

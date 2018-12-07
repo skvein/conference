@@ -14,7 +14,7 @@ public class Track {
     /**
      * 会议明细
      */
-    private List<TrackDetails> trackDetails;
+    private List<TrackDetail> trackDetails;
 
     public String getTrackName() {
         return trackName;
@@ -24,11 +24,11 @@ public class Track {
         this.trackName = trackName;
     }
 
-    public List<TrackDetails> getTrackDetails() {
+    public List<TrackDetail> getTrackDetails() {
         return trackDetails;
     }
 
-    public void setTrackDetails(List<TrackDetails> trackDetails) {
+    public void setTrackDetails(List<TrackDetail> trackDetails) {
         this.trackDetails = trackDetails;
     }
 

@@ -6,7 +6,7 @@ package com.tw.conference.entity;
  * @Date : create in 15:02 2018/12/6
  * @Mail :shenkai_cd@keruyun.com
  */
-public class TrackDetails{
+public class TrackDetail {
     /**
      * 时间
      */
