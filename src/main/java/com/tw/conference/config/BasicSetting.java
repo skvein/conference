@@ -15,25 +15,30 @@ public class BasicSetting {
     private final static int MORNING_MAX=12;
     private final static int AFTERNOON_MAX=5;
 
-    private int conferenceDay;
-
+    /**
+     * 最小会议时间
+     */
     private int lightning=5;
 
+    /**
+     * 早上开始时间
+     */
     private int morningStartHours=9;
 
+    /**
+     * 早上结束时间
+     */
     private int morningEndHours=12;
 
+    /**
+     * 下午开始时间
+     */
     private int afternoonStartHours=1;
 
+    /**
+     * 下午结束时间
+     */
     private int afternoonEndHours=5;
-
-    public int getConferenceDay() {
-        return conferenceDay;
-    }
-
-    public void setConferenceDay(int conferenceDay) {
-        this.conferenceDay = conferenceDay;
-    }
 
     public int getLightning() {
         return lightning;
@@ -80,10 +85,6 @@ public class BasicSetting {
      */
     public void setting(){
         Scanner sc = new Scanner(System.in);
-        //设置会议天数
-        System.out.println("请输入会议安排天数：");
-        conferenceDay=settingInt(sc,"会议天数需是正整数");
-
         System.out.println("请输入时间单位：");
         lightning = settingInt(sc,"时间单位是正整数");
 
@@ -204,7 +205,6 @@ public class BasicSetting {
     }
 
     public void printInfo(){
-        System.out.println("会议安排天数："+conferenceDay);
         System.out.println("最小会议时间："+lightning);
         System.out.println("早上开始时间："+morningStartHours);
         System.out.println("早上结束时间："+morningEndHours);

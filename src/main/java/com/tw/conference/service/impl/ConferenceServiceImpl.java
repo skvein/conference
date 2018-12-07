@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -132,7 +133,7 @@ public class ConferenceServiceImpl implements ConferenceService {
     }
 
     /**
-     * 构建上午的会议
+     * 构建会议
      * @param conferences
      * @param leisureMinute
      * @param startHour
@@ -141,15 +142,13 @@ public class ConferenceServiceImpl implements ConferenceService {
     private List<TrackDetails> buildTrack(List<TrackDetails> trackDetails,List<Conference> conferences,int leisureMinute,int startHour,String str){
         Calendar morningCalendar =Calendar.getInstance();
         morningCalendar.set(0,0,0,startHour,0);
-        int conferencetime=0;
-        //构建早上的会议
-        while(leisureMinute-conferencetime>0  && getConference(conferences,leisureMinute-conferencetime)!=null){
+        List<Conference> datas=getConference(conferences,new ArrayList<>(),leisureMinute,0).get(0);
+        conferences.remove(datas);
+        for(Conference conference:datas){
             TrackDetails details=new TrackDetails();
             details.setTime(String.valueOf(morningCalendar.get(Calendar.HOUR))+":"+String.valueOf(morningCalendar.get(Calendar.MINUTE))+str);
-            Conference conference=getConference(conferences,leisureMinute-conferencetime);
             details.setConference(conference);
             trackDetails.add(details);
-            conferencetime=conferencetime+conference.getDuration();
             morningCalendar.add(Calendar.MINUTE,conference.getDuration());
             conferences.remove(conference);
         }
@@ -158,19 +157,37 @@ public class ConferenceServiceImpl implements ConferenceService {
 
 
     /**
-     * 判断时间片是否能安排会议
+     * 更具时间片安排会议
      * @param conferences
-     * @param time
+     * @param list
      * @return
      */
-    private Conference getConference(List<Conference> conferences,int time){
-        Conference result =null;
-        for(Conference conference:conferences){
-            if(time>=conference.getDuration()){
-                result =conference;
-                break;
+    public static List<List<Conference>> getConference(List<Conference> conferences,List<Conference> list , int m, int i) {
+        List<List<Conference>> resList = new ArrayList<>();
+        while (i < conferences.size()) {
+            list.add(conferences.get(i));
+            if (getsum(list) == m) {
+                resList.add(list);
+                return resList;
             }
+            i++;
+            getConference(conferences,list, m, i);
+            list.remove(list.size() - 1);
         }
-        return result;
+        return resList;
+    }
+
+    /**
+     * 求和
+     * @param list
+     * @return
+     */
+    private static int getsum(List<Conference> list) {
+        int sum = 0;
+        Iterator<Conference> iterator = list.iterator();
+        while(iterator.hasNext()){
+            sum += iterator.next().getDuration();
+        }
+        return sum;
     }
 }

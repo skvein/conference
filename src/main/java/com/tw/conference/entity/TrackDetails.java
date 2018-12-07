@@ -7,8 +7,14 @@ package com.tw.conference.entity;
  * @Mail :shenkai_cd@keruyun.com
  */
 public class TrackDetails{
+    /**
+     * 时间
+     */
     private String time;
 
+    /**
+     * 会议信息
+     */
     private Conference conference;
 
     public String getTime() {

@@ -11,6 +11,9 @@ import java.util.List;
 public class Track {
     private String trackName;
 
+    /**
+     * 会议明细
+     */
     private List<TrackDetails> trackDetails;
 
     public String getTrackName() {

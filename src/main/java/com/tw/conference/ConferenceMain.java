@@ -6,7 +6,6 @@ import com.tw.conference.entity.Track;
 import com.tw.conference.service.impl.ConferenceServiceImpl;
 
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * @Authir : skevin
@@ -19,12 +18,12 @@ public class ConferenceMain {
     public static void main(String[] args) {
         //参数信息
         BasicSetting parameter =new BasicSetting();
-        System.out.print("是否修改参数(Y/N)：");
+        /*System.out.print("是否修改参数(Y/N)：");
         Scanner sc = new Scanner(System.in);
-        String str=sc.nextLine();
-        if("Y".equals(str)){
+        String flag=sc.nextLine();
+        if("Y".equals(flag)){
             parameter.setting();
-        }
+        }*/
         System.out.println("当前参数信息");
         parameter.printInfo();
         System.out.println("=====================================");
@@ -46,9 +45,13 @@ public class ConferenceMain {
        for(Track track:tracks){
             System.out.println(track.getTrackName());
             track.getTrackDetails().forEach(detail->{
-                System.out.println(detail.getTime()+" "+detail.getConference().getConferenceName()+" "+detail.getConference().getDuration()+"min");
-                System.out.println("  ");
+                if(detail.getConference().getDuration()!=0){
+                    System.out.println(detail.getTime()+" "+detail.getConference().getConferenceName()+" "+detail.getConference().getDuration()+"min");
+                }else{
+                    System.out.println(detail.getTime()+" "+detail.getConference().getConferenceName());
+                }
             });
        }
     }
+
 }
